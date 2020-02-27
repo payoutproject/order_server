@@ -142,15 +142,17 @@ class CreateOrder(object):
                     )
             ).run()}
         else:
-            # 傲银支付
+            # 自我
             if self.paypasslinktype.passid in (0, 1):
 
-                wbSClass = weiboSysRun()
-                html = wbSClass.pay(self.order)
+                return QrTypePage(type='QR030',order=self.order).run()
 
-                RedisOrderCreate().redis_insert(md5pass(str(self.order.ordercode)), html)
-
-                return {"path":url_join("/api_new/business/DownOrder?o={}".format(md5pass(str(self.order.ordercode))))}
+                # wbSClass = weiboSysRun()
+                # html = wbSClass.pay(self.order)
+                #
+                # RedisOrderCreate().redis_insert(md5pass(str(self.order.ordercode)), html)
+                #
+                # return {"path":url_join("/api_new/business/DownOrder?o={}".format(md5pass(str(self.order.ordercode))))}
 
 
             #聚力支付
@@ -1212,6 +1214,8 @@ class QrTypePage(object):
             return {"path": url_join("/pay/#/wechat/{}".format(self.order.ordercode))}
         elif self.type == 'QR020':
             return {"path": url_join("/pay/#/wechat/{}".format(self.order.ordercode))}
+        elif self.type == 'QR030':
+            return {"path": url_join("/pay/#/alipay/{}".format(self.order.ordercode))}
         else:
             return {"path": url_join("/pay/#/wechat/{}".format(self.order.ordercode))}
 
