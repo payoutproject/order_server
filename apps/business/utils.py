@@ -113,7 +113,7 @@ class CreateOrder(object):
             "client_ip": self.request_param.get("client_ip"),
             "notifyurl": self.request_param.get("notifyurl"),
             "createtime": self.request_param.get("createtime"),
-            'qr_type': self.qrcodelinkpaytype.type if self.qrcodelinkpaytype and len(self.qrcodelinkpaytype.type) else "",
+            'qr_type': 'QR030',
             "keep_info": self.request_param,
             "lock":self.lock
         })
